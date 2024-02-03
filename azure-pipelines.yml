@@ -11,10 +11,10 @@ pool:
   vmImage: ubuntu-latest
 
 jobs:
-#- job: job1
+- job: job1
 
-#  steps:
-#  - checkout: self
+  steps:
+  - checkout: self
 
 - job: job2
   dependsOn: job1
