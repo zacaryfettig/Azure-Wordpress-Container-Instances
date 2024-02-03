@@ -18,6 +18,4 @@ steps:
     azureSubscription: 'subscription1(cb746d33-61f2-4005-a6e1-323245542be4)'
     scriptType: 'bash'
     scriptLocation: 'inlineScript'
-    inlineScript: 'az storage file upload-batch --destination https://storage1444.file.core.windows.net/storage1 --destination-path /wordpress --account-name ${azurerm_storage_account.storageAccount.name} --account-key ${azurerm_storage_account.storageAccount.primary_access_key}'
-    
-# --source ./redisCachePlugin
+    inlineScript: 'az storage file upload-batch --destination https://storage1444.file.core.windows.net/storage1 --destination-path /wordpress --account-name storage1 --account-key 4kUiegLEzF6LmwJbLdIr5rWrdRG6Du9sLc/PFPoa+lPBCgPzhqaflz+d+BqSfdC8VOW/zNzaeJP5+AStmhfF9Q=='
