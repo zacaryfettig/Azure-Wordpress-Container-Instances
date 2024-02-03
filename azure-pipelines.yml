@@ -17,4 +17,4 @@ steps:
     azureSubscription: # string. Alias: connectedServiceNameARM. Required. Azure Resource Manager connection. 
     scriptType: 'bash'
     scriptLocation: 'inlineScript'
-    inlineScript: # string. Required when scriptLocation = inlineScript. Inline Script
+    inlineScript: az storage file upload-batch --destination https://storagegocif5.file.core.windows.net/wordpress --destination-path /wp-content/plugins --source ./redisCachePlugin --account-name ${azurerm_storage_account.storageAccount.name} --account-key ${azurerm_storage_account.storageAccount.primary_access_key}
