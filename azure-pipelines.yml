@@ -16,6 +16,5 @@ steps:
   inputs:
     azureSubscription: # string. Alias: connectedServiceNameARM. Required. Azure Resource Manager connection. 
     scriptType: # 'ps' | 'pscore' | 'batch' | 'bash'. Required. Script Type. 
-    scriptLocation: 'scriptPath' # 'inlineScript' | 'scriptPath'. Required. Script Location. Default: scriptPath.
-    scriptPath: # string. Required when scriptLocation = scriptPath. Script Path. 
+    scriptLocation: 'inlineScript'
      #inlineScript: # string. Required when scriptLocation = inlineScript. Inline Script
