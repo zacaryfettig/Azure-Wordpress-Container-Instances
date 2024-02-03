@@ -3,19 +3,27 @@
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
 
+
 trigger:
 - main
 
 pool:
   vmImage: ubuntu-latest
 
-steps:
-- checkout: self
-  
-  
-- task: AzureCLI@2
-  inputs:
-    azureSubscription: 'subscription1(cb746d33-61f2-4005-a6e1-323245542be4)'
-    scriptType: 'bash'
-    scriptLocation: 'inlineScript'
-    inlineScript: 'az storage file upload-batch --destination https://storage1444.file.core.windows.net/storage1 --destination-path /wordpress --source $(System.DefaultWorkingDirectory) --account-name storage1 --account-key 4kUiegLEzF6LmwJbLdIr5rWrdRG6Du9sLc/PFPoa+lPBCgPzhqaflz+d+BqSfdC8VOW/zNzaeJP5+AStmhfF9Q=='
+jobs:
+- job: job1
+
+  steps:
+  - checkout: self
+
+- job: job2
+  dependsOn: job1
+  steps:
+
+    - task: AzureCLI@2
+      inputs:
+        azureSubscription: 'subscription1(cb746d33-61f2-4005-a6e1-323245542be4)'
+        scriptType: 'bash'
+        scriptLocation: 'inlineScript'
+        inlineScript: 'az storage file upload-batch --destination https://storage1444.file.core.windows.net/storage1 --destination-path /wordpress --source $(System.DefaultWorkingDirectory) --account-name storage1 --account-key 4kUiegLEzF6LmwJbLdIr5rWrdRG6Du9sLc/PFPoa+lPBCgPzhqaflz+d+BqSfdC8VOW/zNzaeJP5+AStmhfF9Q=='
+
