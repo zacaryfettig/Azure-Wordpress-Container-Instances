@@ -10,7 +10,7 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-  - checkout: self
+- checkout: self
   
   
 - task: AzureCLI@2
