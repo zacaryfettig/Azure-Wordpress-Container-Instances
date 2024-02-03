@@ -11,10 +11,11 @@ pool:
 
 steps:
   - checkout: self
-
-  - task: AzureCLI@2
+  
+  
+- task: AzureCLI@2
   inputs:
-    azureSubscription: # string. Alias: connectedServiceNameARM. Required. Azure Resource Manager connection. 
+    azureSubscription: 'subscription1(cb746d33-61f2-4005-a6e1-323245542be4)'
     scriptType: 'bash'
     scriptLocation: 'inlineScript'
-    inlineScript: az storage file upload-batch --destination https://storagegocif5.file.core.windows.net/wordpress --destination-path /wp-content/plugins --source ./redisCachePlugin --account-name ${azurerm_storage_account.storageAccount.name} --account-key ${azurerm_storage_account.storageAccount.primary_access_key}
+    inlineScript: 'az storage file upload-batch --destination https://storagegocif5.file.core.windows.net/wordpress --destination-path /wp-content/plugins --source ./redisCachePlugin --account-name ${azurerm_storage_account.storageAccount.name} --account-key ${azurerm_storage_account.storageAccount.primary_access_key}'
