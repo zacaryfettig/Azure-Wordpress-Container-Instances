@@ -18,6 +18,7 @@ jobs:
 
 - job: job2
   dependsOn: job1
+  condition: succeded('job1')
   steps:
 
     - task: AzureCLI@2
