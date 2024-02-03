@@ -15,6 +15,6 @@ steps:
   - task: AzureCLI@2
   inputs:
     azureSubscription: # string. Alias: connectedServiceNameARM. Required. Azure Resource Manager connection. 
-    scriptType: # 'ps' | 'pscore' | 'batch' | 'bash'. Required. Script Type. 
+    scriptType: 'bash'
     scriptLocation: 'inlineScript'
-     #inlineScript: # string. Required when scriptLocation = inlineScript. Inline Script
+    inlineScript: # string. Required when scriptLocation = inlineScript. Inline Script
