@@ -26,5 +26,5 @@ jobs:
         azureSubscription: 'subscription1(cb746d33-61f2-4005-a6e1-323245542be4)'
         scriptType: 'bash'
         scriptLocation: 'inlineScript'
-        inlineScript: 'az storage file upload-batch --destination https://rg1444.file.core.windows.net/wordpress --destination-path /wordpress --source $(System.DefaultWorkingDirectory)/themes --account-name wordpress --account-key 51N2VCpCN5WlIgbZ+HOcf/lt2FqTG0i2mxRh4NKBKD+5r4oePSu69/TNNQiGhFetusssQJX9K5l8+AStJPPPIw=='
+        inlineScript: 'az storage file upload-batch --destination https://rg1444.file.core.windows.net/wordpress --destination-path /wordpress --source $(System.DefaultWorkingDirectory)/themes --account-name rg1444 --account-key 51N2VCpCN5WlIgbZ+HOcf/lt2FqTG0i2mxRh4NKBKD+5r4oePSu69/TNNQiGhFetusssQJX9K5l8+AStJPPPIw=='
 
