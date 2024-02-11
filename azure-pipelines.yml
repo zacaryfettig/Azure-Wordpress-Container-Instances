@@ -4,12 +4,12 @@ trigger:
 pool: linux-container-instances
 
 jobs:
-- job: job1
+- job: checkout
 
   steps:
   - checkout: self
 
-- job: job2
+- job: azurecli
   dependsOn: job1
   condition: succeeded('job1')
   steps:
