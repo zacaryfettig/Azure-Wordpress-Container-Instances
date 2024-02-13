@@ -48,7 +48,7 @@ jobs:
 #        inlineScript: 'az storage file upload-batch --destination https://$(storageAccountName).file.core.windows.net/wordpress --destination-path /wordpress/wp-content/plugins --source $(System.DefaultWorkingDirectory)/themes --account-name $(storageAccountName) --account-key $(storageAccessKey)'
 
 #Replace word in file
-#gets variable from keyvault and inserts it into file
+#gets variable from keyvault and inserts it into file. Need to add keyword as a filler into the document, so that the command has a word to reference.
     - task: AzureCLI@2
       inputs:
         azureSubscription: 'subscription1(cb746d33-61f2-4005-a6e1-323245542be4)'
