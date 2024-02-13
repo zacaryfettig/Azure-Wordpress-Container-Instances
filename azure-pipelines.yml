@@ -46,4 +46,13 @@ jobs:
 #        scriptType: 'bash'
 #        scriptLocation: 'inlineScript'
 #        inlineScript: 'az storage file upload-batch --destination https://$(storageAccountName).file.core.windows.net/wordpress --destination-path /wordpress/wp-content/plugins --source $(System.DefaultWorkingDirectory)/themes --account-name $(storageAccountName) --account-key $(storageAccessKey)'
+
+#Replace word in file
+#gets variable from keyvault and inserts it into file
+    - task: AzureCLI@2
+      inputs:
+        azureSubscription: 'subscription1(cb746d33-61f2-4005-a6e1-323245542be4)'
+        scriptType: 'bash'
+        scriptLocation: 'inlineScript'
+        inlineScript: 'sed -i 's/'
         
