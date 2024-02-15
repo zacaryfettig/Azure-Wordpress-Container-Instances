@@ -19,7 +19,7 @@ jobs:
     - task: AzureKeyVault@2
       inputs:
         azureSubscription: 'subscription1(cb746d33-61f2-4005-a6e1-323245542be4)'
-        KeyVaultName: 'keyVault-gocif5'
+        KeyVaultName: 'keyVault-fz378z'
         SecretsFilter: '*'
         RunAsPreJob: true
         
