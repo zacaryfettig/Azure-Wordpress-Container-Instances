@@ -23,13 +23,7 @@ jobs:
         RunAsPreJob: true
         
 
-#Config File
-#    - task: AzureCLI@2
-#      inputs:
-#        azureSubscription: 'subscription1(cb746d33-61f2-4005-a6e1-323245542be4)'
-#        scriptType: 'bash'
-#        scriptLocation: 'inlineScript'
-#        inlineScript: 'az storage file upload --source $(System.DefaultWorkingDirectory)/wp-config.php --account-name $(storageAccountName) --account-key $(storageAccessKey) --share-name wordpress'
+
 
 #Themes
 #    - task: AzureCLI@2
@@ -63,3 +57,10 @@ jobs:
         scriptLocation: 'inlineScript'
         inlineScript: 'find $(System.DefaultWorkingDirectory) -name wp-config.php | sed -i s/$(dbname)/dbname/g'
         
+        #Config File
+    - task: AzureCLI@2
+      inputs:
+        azureSubscription: 'subscription1(cb746d33-61f2-4005-a6e1-323245542be4)'
+        scriptType: 'bash'
+        scriptLocation: 'inlineScript'
+        inlineScript: 'az storage file upload --source $(System.DefaultWorkingDirectory)/wp-config.php --account-name $(storageAccountName) --account-key $(storageAccessKey) --share-name wordpress'
