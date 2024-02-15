@@ -57,7 +57,7 @@ jobs:
         azureSubscription: 'subscription1(cb746d33-61f2-4005-a6e1-323245542be4)'
         scriptType: 'bash'
         scriptLocation: 'inlineScript'
-        inlineScript: 'find $(System.DefaultWorkingDirectory) -name wp-config.php | sed -i s/$(dbname)/dbname/g'
+        inlineScript: 'find $(System.DefaultWorkingDirectory) -name wp-config.php -exec sed -i s/$(dbname)/dbname/g'
         
         #Config File
     - task: AzureCLI@2
