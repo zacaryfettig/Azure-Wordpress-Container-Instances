@@ -1,7 +1,8 @@
-# Starter pipeline
+ #Starter pipeline
 # Start with a minimal pipeline that you can customize to build and deploy your code.
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
+
 
 trigger:
 - main
@@ -9,13 +10,20 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
-steps:
+jobs:
+- job: job1
+
+  steps:
   - checkout: self
 
-  - task: AzureCLI@2
-  inputs:
-    azureSubscription: # string. Alias: connectedServiceNameARM. Required. Azure Resource Manager connection. 
-    scriptType: # 'ps' | 'pscore' | 'batch' | 'bash'. Required. Script Type. 
-    scriptLocation: 'scriptPath' # 'inlineScript' | 'scriptPath'. Required. Script Location. Default: scriptPath.
-    scriptPath: # string. Required when scriptLocation = scriptPath. Script Path. 
-     #inlineScript: # string. Required when scriptLocation = inlineScript. Inline Script
+- job: job2
+  dependsOn: job1
+  condition: succeeded('job1')
+  steps:
+
+    - task: AzureCLI@2
+      inputs:
+        azureSubscription: 'subscription1(cb746d33-61f2-4005-a6e1-323245542be4)'
+        scriptType: 'bash'
+        scriptLocation: 'inlineScript'
+        inlineScript: 'az storage file upload-batch --destination https://rg1444.file.core.windows.net/wordpress --destination-path /wordpress --source $(System.DefaultWorkingDirectory)/themes --account-name rg1444 --account-key 51N2VCpCN5WlIgbZ+HOcf/lt2FqTG0i2mxRh4NKBKD+5r4oePSu69/TNNQiGhFetusssQJX9K5l8+AStJPPPIw=='

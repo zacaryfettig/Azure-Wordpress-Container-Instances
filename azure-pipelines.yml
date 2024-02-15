@@ -1,0 +1,58 @@
+trigger:
+- main
+
+pool: #linux-container-instances
+  vmImage: ubuntu-latest
+jobs:
+- job: checkout
+
+  steps:
+  - checkout: self
+
+- job: azurecli
+  dependsOn: job1
+  condition: succeeded('job1')
+  steps:
+  
+
+    - task: AzureKeyVault@2
+      inputs:
+        azureSubscription: 'subscription1(cb746d33-61f2-4005-a6e1-323245542be4)'
+        KeyVaultName: 'keyVault-gocif5'
+        SecretsFilter: '*'
+        RunAsPreJob: true
+        
+
+#Config File
+    - task: AzureCLI@2
+      inputs:
+        azureSubscription: 'subscription1(cb746d33-61f2-4005-a6e1-323245542be4)'
+        scriptType: 'bash'
+        scriptLocation: 'inlineScript'
+        inlineScript: 'az storage file upload --source $(System.DefaultWorkingDirectory)/wp-config.php --account-name $(storageAccountName) --account-key $(storageAccessKey) --share-name wordpress'
+
+#Themes
+#    - task: AzureCLI@2
+#      inputs:
+#        azureSubscription: 'subscription1(cb746d33-61f2-4005-a6e1-323245542be4)'
+#        scriptType: 'bash'
+#        scriptLocation: 'inlineScript'
+#        inlineScript: 'az storage file upload-batch --destination https://$(storageAccountName).file.core.windows.net/wordpress --destination-path /wordpress/wp-content/themes --source $(System.DefaultWorkingDirectory)/themes --account-name $(storageAccountName) --account-key $(storageAccessKey)'
+
+#Plugins
+#    - task: AzureCLI@2
+#      inputs:
+#        azureSubscription: 'subscription1(cb746d33-61f2-4005-a6e1-323245542be4)'
+#        scriptType: 'bash'
+#        scriptLocation: 'inlineScript'
+#        inlineScript: 'az storage file upload-batch --destination https://$(storageAccountName).file.core.windows.net/wordpress --destination-path /wordpress/wp-content/plugins --source $(System.DefaultWorkingDirectory)/themes --account-name $(storageAccountName) --account-key $(storageAccessKey)'
+
+#Replace word in file
+#gets variable from keyvault and inserts it into file. Need to add keyword as a filler into the document, so that the command has a word to reference.
+    - task: AzureCLI@2
+      inputs:
+        azureSubscription: 'subscription1(cb746d33-61f2-4005-a6e1-323245542be4)'
+        scriptType: 'bash'
+        scriptLocation: 'inlineScript'
+        inlineScript: 'sed -i s/$(dbname)/dbname/g'
+        
