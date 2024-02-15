@@ -9,9 +9,10 @@ jobs:
   steps:
   - checkout: self
 
+
 - job: azurecli
-  dependsOn: job1
-  condition: succeeded('job1')
+  dependsOn: checkout
+  condition: succeeded('checkout')
   steps:
   
 
@@ -50,7 +51,7 @@ jobs:
         scriptType: 'bash'
         scriptLocation: 'inlineScript'
         inlineScript: 'cp $(System.DefaultWorkingDirectory)/wp-config-sample.php $(System.DefaultWorkingDirectory)/wp-config.php'
-        
+
     - task: AzureCLI@2
       inputs:
         azureSubscription: 'subscription1(cb746d33-61f2-4005-a6e1-323245542be4)'
