@@ -22,7 +22,7 @@ jobs:
   steps:
     - bash: |
         if [ -d "$(System.DefaultWorkingDirectory)/wordpress-themes-&-plugins/themes" ]; then 
-          themesDirectoryExists: true
+          task.setvariable variable=themesDirectoryExists;isoutput=true
         fi
 
     - task: AzureKeyVault@2
