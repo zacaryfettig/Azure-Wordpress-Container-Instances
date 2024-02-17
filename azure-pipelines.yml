@@ -26,6 +26,7 @@ jobs:
     - bash: |
         if [ -d "$(System.DefaultWorkingDirectory)/wordpress-themes-&-plugins/themes" ]; then 
           task.setvariable themesDirectoryExists=true
+          echo '##vso[task.setvariable variable=themesDirectoryExists]true'
         fi
 
     - bash: |
