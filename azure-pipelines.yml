@@ -82,7 +82,7 @@ jobs:
         azureSubscription: 'subscription1(cb746d33-61f2-4005-a6e1-323245542be4)'
         scriptType: 'bash'
         scriptLocation: 'inlineScript'
-        inlineScript: 'sed -i s/dbuser/$(dbuser)/g wp-config.php $(System.DefaultWorkingDirectory)/wp-config.php'
+        inlineScript: 'sed -i s/dbhost/$(dbhost)/g wp-config.php $(System.DefaultWorkingDirectory)/wp-config.php'
 
         #replace redishost in config file
     - task: AzureCLI@2
@@ -90,7 +90,7 @@ jobs:
         azureSubscription: 'subscription1(cb746d33-61f2-4005-a6e1-323245542be4)'
         scriptType: 'bash'
         scriptLocation: 'inlineScript'
-        inlineScript: 'sed -i s/dbuser/$(dbuser)/g wp-config.php $(System.DefaultWorkingDirectory)/wp-config.php'
+        inlineScript: 'sed -i s/redishost/$(redishost)/g wp-config.php $(System.DefaultWorkingDirectory)/wp-config.php'
 
         #replace redispassword in config file
     - task: AzureCLI@2
@@ -98,7 +98,7 @@ jobs:
         azureSubscription: 'subscription1(cb746d33-61f2-4005-a6e1-323245542be4)'
         scriptType: 'bash'
         scriptLocation: 'inlineScript'
-        inlineScript: 'sed -i s/dbuser/$(dbuser)/g wp-config.php $(System.DefaultWorkingDirectory)/wp-config.php'
+        inlineScript: 'sed -i s/redispassword/$(redispassword)/g wp-config.php $(System.DefaultWorkingDirectory)/wp-config.php'
 
         #replace  in config file
     - task: AzureCLI@2
