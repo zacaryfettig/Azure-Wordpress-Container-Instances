@@ -45,6 +45,7 @@ jobs:
 #Replace word in file
 #gets variable from keyvault and inserts it into file. Need to add keyword as a filler into the document, so that the command has a word to reference.
 
+#copy sample config to wp-config.php for editing and final release
     - task: AzureCLI@2
       inputs:
         azureSubscription: 'subscription1(cb746d33-61f2-4005-a6e1-323245542be4)'
@@ -99,7 +100,7 @@ jobs:
         scriptType: 'bash'
         scriptLocation: 'inlineScript'
         inlineScript: 'sed -i s/redispassword/$(redispassword)/g wp-config.php $(System.DefaultWorkingDirectory)/wp-config.php'
-        
+
 
 #'find $(System.DefaultWorkingDirectory) -name wp-config.php -exec sed -i s/$(dbname)/dbname/g'
 
