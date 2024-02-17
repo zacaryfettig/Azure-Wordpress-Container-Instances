@@ -68,15 +68,39 @@ jobs:
         scriptLocation: 'inlineScript'
         inlineScript: 'sed -i s/dbuser/$(dbuser)/g wp-config.php $(System.DefaultWorkingDirectory)/wp-config.php'
 
-        #replace dbuser in config file
+        #replace dbpassword in config file
     - task: AzureCLI@2
       inputs:
         azureSubscription: 'subscription1(cb746d33-61f2-4005-a6e1-323245542be4)'
         scriptType: 'bash'
         scriptLocation: 'inlineScript'
-        inlineScript: 'sed -i s/dbuser/$(dbuser)/g wp-config.php $(System.DefaultWorkingDirectory)/wp-config.php'
+        inlineScript: 'sed -i s/dbpassword/$(dbpassword)/g wp-config.php $(System.DefaultWorkingDirectory)/wp-config.php'
         
-        #replace dbuser in config file
+        #replace dbhost in config file
+    - task: AzureCLI@2
+      inputs:
+        azureSubscription: 'subscription1(cb746d33-61f2-4005-a6e1-323245542be4)'
+        scriptType: 'bash'
+        scriptLocation: 'inlineScript'
+        inlineScript: 'sed -i s/dbuser/$(dbuser)/g wp-config.php $(System.DefaultWorkingDirectory)/wp-config.php'
+
+        #replace redishost in config file
+    - task: AzureCLI@2
+      inputs:
+        azureSubscription: 'subscription1(cb746d33-61f2-4005-a6e1-323245542be4)'
+        scriptType: 'bash'
+        scriptLocation: 'inlineScript'
+        inlineScript: 'sed -i s/dbuser/$(dbuser)/g wp-config.php $(System.DefaultWorkingDirectory)/wp-config.php'
+
+        #replace redispassword in config file
+    - task: AzureCLI@2
+      inputs:
+        azureSubscription: 'subscription1(cb746d33-61f2-4005-a6e1-323245542be4)'
+        scriptType: 'bash'
+        scriptLocation: 'inlineScript'
+        inlineScript: 'sed -i s/dbuser/$(dbuser)/g wp-config.php $(System.DefaultWorkingDirectory)/wp-config.php'
+
+        #replace  in config file
     - task: AzureCLI@2
       inputs:
         azureSubscription: 'subscription1(cb746d33-61f2-4005-a6e1-323245542be4)'
@@ -100,30 +124,6 @@ jobs:
         scriptLocation: 'inlineScript'
         inlineScript: 'sed -i s/dbuser/$(dbuser)/g wp-config.php $(System.DefaultWorkingDirectory)/wp-config.php'
 
-        #replace dbuser in config file
-    - task: AzureCLI@2
-      inputs:
-        azureSubscription: 'subscription1(cb746d33-61f2-4005-a6e1-323245542be4)'
-        scriptType: 'bash'
-        scriptLocation: 'inlineScript'
-        inlineScript: 'sed -i s/dbuser/$(dbuser)/g wp-config.php $(System.DefaultWorkingDirectory)/wp-config.php'
-
-        #replace dbuser in config file
-    - task: AzureCLI@2
-      inputs:
-        azureSubscription: 'subscription1(cb746d33-61f2-4005-a6e1-323245542be4)'
-        scriptType: 'bash'
-        scriptLocation: 'inlineScript'
-        inlineScript: 'sed -i s/dbuser/$(dbuser)/g wp-config.php $(System.DefaultWorkingDirectory)/wp-config.php'
-
-        #replace dbuser in config file
-    - task: AzureCLI@2
-      inputs:
-        azureSubscription: 'subscription1(cb746d33-61f2-4005-a6e1-323245542be4)'
-        scriptType: 'bash'
-        scriptLocation: 'inlineScript'
-        inlineScript: 'sed -i s/dbuser/$(dbuser)/g wp-config.php $(System.DefaultWorkingDirectory)/wp-config.php'
-                
 #'find $(System.DefaultWorkingDirectory) -name wp-config.php -exec sed -i s/$(dbname)/dbname/g'
 
         #Config File
