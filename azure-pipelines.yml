@@ -11,8 +11,8 @@ variables:
 trigger:
 - main
 
-pool: #linux-container-instances
-  vmImage: ubuntu-latest
+pool: linux-container-instances
+#  vmImage: ubuntu-latest
 jobs:
 - job: checkout
 
