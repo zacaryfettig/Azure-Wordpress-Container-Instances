@@ -1,3 +1,7 @@
+variables:
+- name: AzureSubscription
+  value: subscription1(cb746d33-61f2-4005-a6e1-323245542be4)
+
 trigger:
 - main
 
@@ -29,7 +33,7 @@ jobs:
 #Themes
     - task: AzureCLI@2
       inputs:
-        azureSubscription: 'subscription1(cb746d33-61f2-4005-a6e1-323245542be4)'
+        azureSubscription: $(AzureSubscription)
         scriptType: 'bash'
         scriptLocation: 'inlineScript'
         inlineScript: 'az storage file upload-batch --destination https://$(storageAccountName).file.core.windows.net/wordpress --destination-path /wordpress/wp-content/themes --source $(System.DefaultWorkingDirectory)/themes --account-name $(storageAccountName) --account-key $(storageAccessKey)'
@@ -37,7 +41,7 @@ jobs:
 #Plugins
     - task: AzureCLI@2
       inputs:
-        azureSubscription: 'subscription1(cb746d33-61f2-4005-a6e1-323245542be4)'
+        azureSubscription: $(AzureSubscription)
         scriptType: 'bash'
         scriptLocation: 'inlineScript'
         inlineScript: 'az storage file upload-batch --destination https://$(storageAccountName).file.core.windows.net/wordpress --destination-path /wordpress/wp-content/plugins --source $(System.DefaultWorkingDirectory)/themes --account-name $(storageAccountName) --account-key $(storageAccessKey)'
@@ -47,7 +51,7 @@ jobs:
 #copy sample config to wp-config.php for editing and final release
     - task: AzureCLI@2
       inputs:
-        azureSubscription: 'subscription1(cb746d33-61f2-4005-a6e1-323245542be4)'
+        azureSubscription: $(AzureSubscription)
         scriptType: 'bash'
         scriptLocation: 'inlineScript'
         inlineScript: 'cp $(System.DefaultWorkingDirectory)/wp-config-sample.php $(System.DefaultWorkingDirectory)/wp-config.php'
@@ -55,7 +59,7 @@ jobs:
 #replace dbname in config file
     - task: AzureCLI@2
       inputs:
-        azureSubscription: 'subscription1(cb746d33-61f2-4005-a6e1-323245542be4)'
+        azureSubscription: $(AzureSubscription)
         scriptType: 'bash'
         scriptLocation: 'inlineScript'
         inlineScript: 'sed -i s/dbname/$(dbname)/g wp-config.php $(System.DefaultWorkingDirectory)/wp-config.php'
@@ -63,7 +67,7 @@ jobs:
         #replace dbuser in config file
     - task: AzureCLI@2
       inputs:
-        azureSubscription: 'subscription1(cb746d33-61f2-4005-a6e1-323245542be4)'
+        azureSubscription: $(AzureSubscription)
         scriptType: 'bash'
         scriptLocation: 'inlineScript'
         inlineScript: 'sed -i s/dbuser/$(dbuser)/g wp-config.php $(System.DefaultWorkingDirectory)/wp-config.php'
@@ -71,7 +75,7 @@ jobs:
         #replace dbpassword in config file
     - task: AzureCLI@2
       inputs:
-        azureSubscription: 'subscription1(cb746d33-61f2-4005-a6e1-323245542be4)'
+        azureSubscription: $(AzureSubscription)
         scriptType: 'bash'
         scriptLocation: 'inlineScript'
         inlineScript: 'sed -i s/dbpassword/$(dbpassword)/g $(System.DefaultWorkingDirectory)/wp-config.php'
@@ -79,7 +83,7 @@ jobs:
         #replace dbhost in config file
     - task: AzureCLI@2
       inputs:
-        azureSubscription: 'subscription1(cb746d33-61f2-4005-a6e1-323245542be4)'
+        azureSubscription: $(AzureSubscription)
         scriptType: 'bash'
         scriptLocation: 'inlineScript'
         inlineScript: 'sed -i s/dbhost/$(dbhost)/g $(System.DefaultWorkingDirectory)/wp-config.php'
@@ -87,7 +91,7 @@ jobs:
         #replace redishost in config file
     - task: AzureCLI@2
       inputs:
-        azureSubscription: 'subscription1(cb746d33-61f2-4005-a6e1-323245542be4)'
+        azureSubscription: $(AzureSubscription)
         scriptType: 'bash'
         scriptLocation: 'inlineScript'
         inlineScript: 'sed -i s/redishost/$(redishost)/g $(System.DefaultWorkingDirectory)/wp-config.php'
@@ -95,7 +99,7 @@ jobs:
         #replace redispassword in config file
     - task: AzureCLI@2
       inputs:
-        azureSubscription: 'subscription1(cb746d33-61f2-4005-a6e1-323245542be4)'
+        azureSubscription: $(AzureSubscription)
         scriptType: 'bash'
         scriptLocation: 'inlineScript'
         inlineScript: 'sed -i s/redispassword/$(redispassword)/g $(System.DefaultWorkingDirectory)/wp-config.php'
@@ -103,7 +107,7 @@ jobs:
         #Config File
     - task: AzureCLI@2
       inputs:
-        azureSubscription: 'subscription1(cb746d33-61f2-4005-a6e1-323245542be4)'
+        azureSubscription: $(AzureSubscription)
         scriptType: 'bash'
         scriptLocation: 'inlineScript'
         inlineScript: 'az storage file upload --source $(System.DefaultWorkingDirectory)/wp-config.php --account-name $(storageAccountName) --account-key $(storageAccessKey) --share-name wordpress'
