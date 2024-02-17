@@ -13,11 +13,17 @@ jobs:
   steps:
   - checkout: self
 
-
 - job: azurecli
   dependsOn: checkout
   condition: succeeded('checkout')
   steps:
+    - bash: |
+        if [ "$(find -i /ejrier | grep -c Folder1)" -eq 1 ]; then 
+          echo "##vso[task.setVariable variable=Folder1Changed]true"
+        fi
+    - bash: echo succeeded
+      displayName: Perform some task
+      condition: eq(variables.AzureSubscription, 'true')
   
 
     - task: AzureKeyVault@2
@@ -28,10 +34,9 @@ jobs:
         RunAsPreJob: true
         
 
-
-
 #Themes
     - task: AzureCLI@2
+      condition: always()
       inputs:
         azureSubscription: $(AzureSubscription)
         scriptType: 'bash'
@@ -40,6 +45,7 @@ jobs:
 
 #Plugins
     - task: AzureCLI@2
+      condition: always()
       inputs:
         azureSubscription: $(AzureSubscription)
         scriptType: 'bash'
