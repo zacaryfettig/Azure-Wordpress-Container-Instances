@@ -5,6 +5,9 @@ variables:
 - name: themesDirectoryExists
   value: false
 
+- name: pluginsDirectoryExists
+  value: false
+
 trigger:
 - main
 
@@ -25,6 +28,11 @@ jobs:
           task.setvariable variable=themesDirectoryExists;isoutput=true
         fi
 
+    - bash: |
+        if [ -d "$(System.DefaultWorkingDirectory)/wordpress-themes-&-plugins/plugins" ]; then 
+          task.setvariable variable=themesDirectoryExists;isoutput=true
+        fi
+
     - task: AzureKeyVault@2
       inputs:
         azureSubscription: 'subscription1(cb746d33-61f2-4005-a6e1-323245542be4)'
@@ -39,16 +47,16 @@ jobs:
         azureSubscription: $(AzureSubscription)
         scriptType: 'bash'
         scriptLocation: 'inlineScript'
-        inlineScript: 'az storage file upload-batch --destination https://$(storageAccountName).file.core.windows.net/wordpress --destination-path /wordpress/wp-content/themes --source $(System.DefaultWorkingDirectory)/wordpress-themes-&-plugins/theme --account-name $(storageAccountName) --account-key $(storageAccessKey)'
+        inlineScript: 'az storage file upload-batch --destination https://$(storageAccountName).file.core.windows.net/wordpress --destination-path /wordpress/wp-content/themes --source $(System.DefaultWorkingDirectory)/wordpress-themes-&-plugins/themes --account-name $(storageAccountName) --account-key $(storageAccessKey)'
 
 #Plugins
-#    - task: AzureCLI@2
-#      condition: always()
-#      inputs:
-#        azureSubscription: $(AzureSubscription)
-#        scriptType: 'bash'
-#        scriptLocation: 'inlineScript'
-#        inlineScript: 'az storage file upload-batch --destination https://$(storageAccountName).file.core.windows.net/wordpress --destination-path /wordpress/wp-content/plugins --source $(System.DefaultWorkingDirectory)/wordpress-themes-&-plugins/plugins --account-name $(storageAccountName) --account-key $(storageAccessKey)'
+    - task: AzureCLI@2
+      condition: always()
+      inputs:
+        azureSubscription: $(AzureSubscription)
+        scriptType: 'bash'
+        scriptLocation: 'inlineScript'
+        inlineScript: 'az storage file upload-batch --destination https://$(storageAccountName).file.core.windows.net/wordpress --destination-path /wordpress/wp-content/plugins --source $(System.DefaultWorkingDirectory)/wordpress-themes-&-plugins/plugins --account-name $(storageAccountName) --account-key $(storageAccessKey)'
 
 
 #Following code replaces values in the Wordpress Config File with Keyvault secrets created from Terraform Template
