@@ -34,7 +34,7 @@ jobs:
 
 #Themes
     - task: AzureCLI@2
-      condition: always()
+      condition: eq(variables.AzureSubscription, 'true')
       inputs:
         azureSubscription: $(AzureSubscription)
         scriptType: 'bash'
