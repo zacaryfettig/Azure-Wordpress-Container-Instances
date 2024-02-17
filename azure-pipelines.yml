@@ -25,12 +25,12 @@ jobs:
   steps:
     - bash: |
         if [ -d "$(System.DefaultWorkingDirectory)/wordpress-themes-&-plugins/themes" ]; then 
-          task.setvariable variable=themesDirectoryExists;isoutput=true
+          task.setvariable themesDirectoryExists=true
         fi
 
     - bash: |
         if [ -d "$(System.DefaultWorkingDirectory)/wordpress-themes-&-plugins/plugins" ]; then 
-          task.setvariable variable=themesDirectoryExists;isoutput=true
+          task.setvariable pluginsDirectoryExists=true
         fi
 
     - task: AzureKeyVault@2
