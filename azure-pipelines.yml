@@ -42,13 +42,13 @@ jobs:
         inlineScript: 'az storage file upload-batch --destination https://$(storageAccountName).file.core.windows.net/wordpress --destination-path /wordpress/wp-content/themes --source $(System.DefaultWorkingDirectory)/wordpress-themes-&-plugins/themes --account-name $(storageAccountName) --account-key $(storageAccessKey)'
 
 #Plugins
-    - task: AzureCLI@2
-      condition: always()
-      inputs:
-        azureSubscription: $(AzureSubscription)
-        scriptType: 'bash'
-        scriptLocation: 'inlineScript'
-        inlineScript: 'az storage file upload-batch --destination https://$(storageAccountName).file.core.windows.net/wordpress --destination-path /wordpress/wp-content/plugins --source $(System.DefaultWorkingDirectory)/wordpress-themes-&-plugins/plugins --account-name $(storageAccountName) --account-key $(storageAccessKey)'
+#    - task: AzureCLI@2
+#      condition: always()
+#      inputs:
+#        azureSubscription: $(AzureSubscription)
+#        scriptType: 'bash'
+#        scriptLocation: 'inlineScript'
+#        inlineScript: 'az storage file upload-batch --destination https://$(storageAccountName).file.core.windows.net/wordpress --destination-path /wordpress/wp-content/plugins --source $(System.DefaultWorkingDirectory)/wordpress-themes-&-plugins/plugins --account-name $(storageAccountName) --account-key $(storageAccessKey)'
 
 
 #Following code replaces values in the Wordpress Config File with Keyvault secrets created from Terraform Template
