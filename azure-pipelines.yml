@@ -104,7 +104,7 @@ jobs:
         scriptLocation: 'inlineScript'
         inlineScript: 'sed -i s/redispassword/$(redispassword)/g $(System.DefaultWorkingDirectory)/wp-config.php'
 
-        #Config File
+        #Config File upload to Wordpress Files
     - task: AzureCLI@2
       inputs:
         azureSubscription: $(AzureSubscription)
