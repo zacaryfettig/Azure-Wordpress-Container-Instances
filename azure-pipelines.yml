@@ -39,7 +39,7 @@ jobs:
         azureSubscription: $(AzureSubscription)
         scriptType: 'bash'
         scriptLocation: 'inlineScript'
-        inlineScript: 'az storage file upload-batch --destination https://$(storageAccountName).file.core.windows.net/wordpress --destination-path /wordpress/wp-content/themes --source $(System.DefaultWorkingDirectory)/wordpress-themes-&-plugins/themes --account-name $(storageAccountName) --account-key $(storageAccessKey)'
+        inlineScript: 'az storage file upload-batch --destination https://$(storageAccountName).file.core.windows.net/wordpress --destination-path /wordpress/wp-content/themes --source $(System.DefaultWorkingDirectory)/wordpress-themes-&-plugins/theme --account-name $(storageAccountName) --account-key $(storageAccessKey)'
 
 #Plugins
 #    - task: AzureCLI@2
