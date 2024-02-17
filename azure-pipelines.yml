@@ -21,7 +21,7 @@ jobs:
   condition: succeeded('checkout')
   steps:
     - bash: |
-        if [ -d  $(System.DefaultWorkingDirectory)/wordpress-themes-&-plugins/themes]; then 
+        if [ -d $(System.DefaultWorkingDirectory)/wordpress-themes-&-plugins/themes]; then 
           condition: eq(variables.AzureSubscription, 'true')
         fi
 
