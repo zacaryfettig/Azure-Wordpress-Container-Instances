@@ -1,6 +1,9 @@
 variables:
 - name: AzureSubscription
   value: subscription1(cb746d33-61f2-4005-a6e1-323245542be4)
+  
+- name: themesDirectoryExists
+  value: false
 
 trigger:
 - main
@@ -19,12 +22,8 @@ jobs:
   steps:
     - bash: |
         if [ -d  $(System.DefaultWorkingDirectory)/]; then 
-          echo "##vso[task.setVariable variable=Folder1Changed]true"
+          condition: eq(variables.AzureSubscription, 'true')
         fi
-    - bash: echo succeeded
-      displayName: Perform some task
-      condition: eq(variables.AzureSubscription, 'true')
-  
 
     - task: AzureKeyVault@2
       inputs:
@@ -32,7 +31,6 @@ jobs:
         KeyVaultName: 'keyVault-fz378z'
         SecretsFilter: '*'
         RunAsPreJob: true
-        
 
 #Themes
     - task: AzureCLI@2
