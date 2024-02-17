@@ -42,7 +42,7 @@ jobs:
 
 #Themes
     - task: AzureCLI@2
-      condition: eq(variables.AzureSubscription, 'true')
+      condition: eq(variables.themesDirectoryExists, 'true')
       inputs:
         azureSubscription: $(AzureSubscription)
         scriptType: 'bash'
@@ -51,7 +51,7 @@ jobs:
 
 #Plugins
     - task: AzureCLI@2
-      condition: eq(variables.AzureSubscription, 'true')
+      condition: eq(variables.pluginsDirectoryExists, 'true')
       inputs:
         azureSubscription: $(AzureSubscription)
         scriptType: 'bash'
