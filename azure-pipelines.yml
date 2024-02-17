@@ -29,7 +29,6 @@ jobs:
         
 
 
-
 #Themes
     - task: AzureCLI@2
       inputs:
