@@ -9,27 +9,22 @@ jobs:
   steps:
   - checkout: self
 
+
 - job: azurecli
-  dependsOn: job1
-  condition: succeeded('job1')
+  dependsOn: checkout
+  condition: succeeded('checkout')
   steps:
   
 
     - task: AzureKeyVault@2
       inputs:
         azureSubscription: 'subscription1(cb746d33-61f2-4005-a6e1-323245542be4)'
-        KeyVaultName: 'keyVault-gocif5'
+        KeyVaultName: 'keyVault-fz378z'
         SecretsFilter: '*'
         RunAsPreJob: true
         
 
-#Config File
-    - task: AzureCLI@2
-      inputs:
-        azureSubscription: 'subscription1(cb746d33-61f2-4005-a6e1-323245542be4)'
-        scriptType: 'bash'
-        scriptLocation: 'inlineScript'
-        inlineScript: 'az storage file upload --source $(System.DefaultWorkingDirectory)/wp-config.php --account-name $(storageAccountName) --account-key $(storageAccessKey) --share-name wordpress'
+
 
 #Themes
 #    - task: AzureCLI@2
@@ -49,10 +44,70 @@ jobs:
 
 #Replace word in file
 #gets variable from keyvault and inserts it into file. Need to add keyword as a filler into the document, so that the command has a word to reference.
+
+#copy sample config to wp-config.php for editing and final release
     - task: AzureCLI@2
       inputs:
         azureSubscription: 'subscription1(cb746d33-61f2-4005-a6e1-323245542be4)'
         scriptType: 'bash'
         scriptLocation: 'inlineScript'
-        inlineScript: 'sed -i s/$(dbname)/dbname/g'
+        inlineScript: 'cp $(System.DefaultWorkingDirectory)/wp-config-sample.php $(System.DefaultWorkingDirectory)/wp-config.php'
+
+#replace dbname in config file
+    - task: AzureCLI@2
+      inputs:
+        azureSubscription: 'subscription1(cb746d33-61f2-4005-a6e1-323245542be4)'
+        scriptType: 'bash'
+        scriptLocation: 'inlineScript'
+        inlineScript: 'sed -i s/dbname/$(dbname)/g wp-config.php $(System.DefaultWorkingDirectory)/wp-config.php'
         
+        #replace dbuser in config file
+    - task: AzureCLI@2
+      inputs:
+        azureSubscription: 'subscription1(cb746d33-61f2-4005-a6e1-323245542be4)'
+        scriptType: 'bash'
+        scriptLocation: 'inlineScript'
+        inlineScript: 'sed -i s/dbuser/$(dbuser)/g wp-config.php $(System.DefaultWorkingDirectory)/wp-config.php'
+
+        #replace dbpassword in config file
+    - task: AzureCLI@2
+      inputs:
+        azureSubscription: 'subscription1(cb746d33-61f2-4005-a6e1-323245542be4)'
+        scriptType: 'bash'
+        scriptLocation: 'inlineScript'
+        inlineScript: 'sed -i s/dbpassword/$(dbpassword)/g $(System.DefaultWorkingDirectory)/wp-config.php'
+        
+        #replace dbhost in config file
+    - task: AzureCLI@2
+      inputs:
+        azureSubscription: 'subscription1(cb746d33-61f2-4005-a6e1-323245542be4)'
+        scriptType: 'bash'
+        scriptLocation: 'inlineScript'
+        inlineScript: 'sed -i s/dbhost/$(dbhost)/g $(System.DefaultWorkingDirectory)/wp-config.php'
+
+        #replace redishost in config file
+    - task: AzureCLI@2
+      inputs:
+        azureSubscription: 'subscription1(cb746d33-61f2-4005-a6e1-323245542be4)'
+        scriptType: 'bash'
+        scriptLocation: 'inlineScript'
+        inlineScript: 'sed -i s/redishost/$(redishost)/g $(System.DefaultWorkingDirectory)/wp-config.php'
+
+        #replace redispassword in config file
+    - task: AzureCLI@2
+      inputs:
+        azureSubscription: 'subscription1(cb746d33-61f2-4005-a6e1-323245542be4)'
+        scriptType: 'bash'
+        scriptLocation: 'inlineScript'
+        inlineScript: 'sed -i s/redispassword/$(redispassword)/g $(System.DefaultWorkingDirectory)/wp-config.php'
+
+
+#'find $(System.DefaultWorkingDirectory) -name wp-config.php -exec sed -i s/$(dbname)/dbname/g'
+
+        #Config File
+    - task: AzureCLI@2
+      inputs:
+        azureSubscription: 'subscription1(cb746d33-61f2-4005-a6e1-323245542be4)'
+        scriptType: 'bash'
+        scriptLocation: 'inlineScript'
+        inlineScript: 'az storage file upload --source $(System.DefaultWorkingDirectory)/wp-config.php --account-name $(storageAccountName) --account-key $(storageAccessKey) --share-name wordpress'
