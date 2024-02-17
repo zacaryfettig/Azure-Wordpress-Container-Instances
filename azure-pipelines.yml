@@ -31,6 +31,7 @@ jobs:
 
 #Themes
     - task: AzureCLI@2
+      condition: always()
       inputs:
         azureSubscription: $(AzureSubscription)
         scriptType: 'bash'
@@ -39,6 +40,7 @@ jobs:
 
 #Plugins
     - task: AzureCLI@2
+      condition: always()
       inputs:
         azureSubscription: $(AzureSubscription)
         scriptType: 'bash'
