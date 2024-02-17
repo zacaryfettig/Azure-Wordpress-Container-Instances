@@ -25,15 +25,15 @@ jobs:
   steps:
     - bash: |
         if [ -d "$(System.DefaultWorkingDirectory)/wordpress-themes-&-plugins/themes" ]; then 
-          #task.setvariable themesDirectoryExists=true
+
           echo '##vso[task.setvariable variable=themesDirectoryExists]true'
         fi
 
     - bash: |
         if [ -d "$(System.DefaultWorkingDirectory)/wordpress-themes-&-plugins/plugins" ]; then 
-          task.setvariable pluginsDirectoryExists=true
+          echo '##vso[task.setvariable variable=pluginsDirectoryExists]true'
         fi
-
+          #task.setvariable themesDirectoryExists=true
     - task: AzureKeyVault@2
       inputs:
         azureSubscription: 'subscription1(cb746d33-61f2-4005-a6e1-323245542be4)'
