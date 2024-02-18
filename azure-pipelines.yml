@@ -85,7 +85,7 @@ jobs:
          scriptLocation: 'inlineScript'
          inlineScript: 'sed -i s/dbuser/$(dbuser)/g wp-config.php $(System.DefaultWorkingDirectory)/wp-config.php'
 
-#         replace dbpassword in config file
+         #replace dbpassword in config file
     - task: AzureCLI@2
       inputs:
          azureSubscription: $(AzureSubscription)
