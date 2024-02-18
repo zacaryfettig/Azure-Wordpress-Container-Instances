@@ -1,6 +1,6 @@
 variables:
 - name: AzureSubscription
-  value: subscription1(cb746d33-61f2-4005-a6e1-323245542be4)
+  value: <SubscriptionName>(<subscriptionID>)
   
 - name: themesDirectoryExists
   value: false
