@@ -1,6 +1,6 @@
 variables:
 - name: AzureSubscription
-  value: <SubscriptionName>(<subscriptionID>)
+  value: $(SubscriptionName)($(subscriptionID))
   
 - name: themesDirectoryExists
   value: false
