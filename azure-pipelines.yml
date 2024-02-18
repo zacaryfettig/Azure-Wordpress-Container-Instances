@@ -1,6 +1,6 @@
 variables:
 - name: AzureSubscription
-  value: $(SubscriptionName)($(subscriptionID))
+  value: <SubscriptionName>(<subscriptionID>)
   
 - name: themesDirectoryExists
   value: false
@@ -36,7 +36,7 @@ jobs:
           #task.setvariable themesDirectoryExists=true
     - task: AzureKeyVault@2
       inputs:
-        azureSubscription: 'subscription1(cb746d33-61f2-4005-a6e1-323245542be4)'
+        azureSubscription: $(AzureSubscription)
         KeyVaultName: 'keyVault-fz378z'
         SecretsFilter: '*'
         RunAsPreJob: true
