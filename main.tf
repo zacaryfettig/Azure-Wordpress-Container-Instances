@@ -1,3 +1,12 @@
+variable "AZPMap" {
+  type = map(string)
+  default = {
+   AZP_URL = "https://dev.azure.com/<devops_organization_name>",
+   AZP_TOKEN = "<DevopsToken>",
+   AZP_POOL = "linux-container-instances"
+  }
+}
+
 //creating Resource Group
 resource "azurerm_resource_group" "resourceGroup" {
   name     = var.resourceGroupName
@@ -94,13 +103,7 @@ resource "azurerm_private_dns_zone" "fileDnsPrivateZone" {
   name                = "file.core.windows.net"
   resource_group_name = azurerm_resource_group.resourceGroup.name
 }
-/*
-//blob.core.windows.net DNS Zone
-resource "azurerm_private_dns_zone" "blobDnsPrivateZone" {
-  name                = "blob.core.windows.net"
-  resource_group_name = azurerm_resource_group.resourceGroup.name
-}
-*/
+
 //Link to File DNS Zone
 resource "azurerm_private_dns_zone_virtual_network_link" "fileDnsZoneLink" {
   name = "fileDnszonelink"
@@ -108,15 +111,7 @@ resource "azurerm_private_dns_zone_virtual_network_link" "fileDnsZoneLink" {
   virtual_network_id = azurerm_virtual_network.wordpressVnet.id
   private_dns_zone_name = azurerm_private_dns_zone.fileDnsPrivateZone.name
 }
-/*
-//Link to Blob DNS Zone
-resource "azurerm_private_dns_zone_virtual_network_link" "blobDnsZoneLink" {
-  name = "blobDnszonelink"
-  resource_group_name = azurerm_resource_group.resourceGroup.name
-  virtual_network_id = azurerm_virtual_network.wordpressVnet.id
-  private_dns_zone_name = azurerm_private_dns_zone.blobDnsPrivateZone.name
-}
-*/
+
 //A Record for Storage Account
 resource "azurerm_private_dns_a_record" "filestorageDNS" {
   name                = azurerm_storage_account.storageAccount.name
@@ -126,17 +121,31 @@ resource "azurerm_private_dns_a_record" "filestorageDNS" {
   records             = ["10.0.5.10"]
   depends_on = [ azurerm_private_endpoint.storageAccountEndpoint ]
 }
-/*
+
+//redis.cache.windows.net DNS Zone
+resource "azurerm_private_dns_zone" "redisDnsPrivateZone" {
+  name                = "redis.cache.windows.net"
+  resource_group_name = azurerm_resource_group.resourceGroup.name
+}
+
+//Link to File DNS Zone
+resource "azurerm_private_dns_zone_virtual_network_link" "redisDnsZoneLink" {
+  name = "redisDnszonelink"
+  resource_group_name = azurerm_resource_group.resourceGroup.name
+  virtual_network_id = azurerm_virtual_network.wordpressVnet.id
+  private_dns_zone_name = azurerm_private_dns_zone.redisDnsPrivateZone.name
+}
+
 //A Record for Storage Account
-resource "azurerm_private_dns_a_record" "blobstorageDNS" {
+resource "azurerm_private_dns_a_record" "redisDNSRecord" {
   name                = azurerm_storage_account.storageAccount.name
-  zone_name           = azurerm_private_dns_zone.blobDnsPrivateZone.name
+  zone_name           = azurerm_private_dns_zone.redisDnsPrivateZone.name
   resource_group_name = azurerm_resource_group.resourceGroup.name
   ttl                 = 300
-  records             = ["10.0.5.10"]
-  depends_on = [ azurerm_private_endpoint.storageAccountEndpoint ]
+  records             = ["10.0.4.5"]
+  depends_on = [ azurerm_redis_cache.redisCacheMysql ]
 }
-*/
+
 //Azure Container Group for Wordpress
 resource "azurerm_container_group" "containerGroup" {
   name                = "wordpressContainerGroup"
@@ -218,22 +227,17 @@ resource "azurerm_private_endpoint" "storageAccountEndpoint" {
   depends_on = [ azurerm_storage_share.storageShareFile ]
 }
 
-/*
+
 resource "azurerm_storage_account_network_rules" "storageNetworkRule" {
   storage_account_id = azurerm_storage_account.storageAccount.id
   default_action             = "Deny"
   depends_on = [ azurerm_redis_cache.redisCacheMysql,
   azurerm_storage_share.storageShareFile,
-  //null_resource.parameterChange,
-  //null_resource.storageUploadConfig,
-  //null_resource.storageUpload,
-  azurerm_container_group.containerGroup,
-  //azurerm_container_group.devopsAgentcontainerGroup,
-  azurerm_redis_cache.redisCacheMysql,
-  null_resource.push
+  null_resource.push,
+  azurerm_container_group.devopsAgentcontainerGroup
   ]
 }
-*/
+
 
 resource "azurerm_storage_share" "storageShareFile" {
   name                 = "wordpress"
@@ -636,6 +640,10 @@ resource "azurerm_private_endpoint" "redisEndpoint" {
   location            = azurerm_resource_group.resourceGroup.location
   resource_group_name = azurerm_resource_group.resourceGroup.name
   subnet_id           = azurerm_subnet.redisCacheSubnet.id
+  ip_configuration {
+    name = "redisIP"
+    private_ip_address = "10.0.4.5"
+  }
 
   private_service_connection {
     name                           = "redisPrivateServiceConnection"
@@ -747,7 +755,7 @@ resource "azurerm_key_vault_secret" "dbhost" {
 
 resource "azurerm_key_vault_secret" "redishost" {
   name         = "redishost"
-  value        = azurerm_redis_cache.redisCacheMysql.name
+  value        = "10.0.4.5"
   key_vault_id = azurerm_key_vault.keyVault.id
   depends_on = [
     azurerm_key_vault.keyVault,
@@ -812,14 +820,6 @@ resource "azurerm_subnet_nat_gateway_association" "gatewayAssociation" {
   depends_on = [ azurerm_nat_gateway.devopsAgentNatGateway ]
 } 
 
-variable "AZPMap" {
-  type = map(string)
-  default = {
-   AZP_URL = "https://dev.azure.com/zacaryfettig",
-   AZP_TOKEN = "s2zdxc53h5ipqjxweavrobkl4o2y4ug7d4xmrbibexi5jpkb6nsa",
-   AZP_POOL = "linux-container-instances"
-  }
-}
 
 resource "azurerm_container_group" "devopsAgentcontainerGroup" {
   name                = "devopsagentcontainergroup"
@@ -844,8 +844,6 @@ resource "azurerm_container_group" "devopsAgentcontainerGroup" {
       port     = 443
       protocol = "TCP"
     }
-
-
 
     environment_variables = var.AZPMap
  
