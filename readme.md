@@ -1,5 +1,5 @@
 # Azure Wordpress Container Architecture and Deployment
-Template objective is hosting a .net web app with SQL database while maintaining connection security from the SQL Database to the web app.
+Hosts a highly available Wordpress website using Container instances and Azure MySQL Database. Reference instructiosn for deployment at https://www.zacaryfettig.com/portfolio/azure-wordpress/
 
 ## Resources created in Template
 * Application Gateway: Layer 7 load balancer with Web Application Firewall. Requests come in through the gateway and privately connects to container instances.
@@ -13,25 +13,3 @@ Template objective is hosting a .net web app with SQL database while maintaining
 * Azure Devops Pipline: CI/CD pipeline gets updated theme files/plug ins/data from GitHub and adds them to the WordPress Container.
 * Self Hosted Azure Devops Container Instance: allows Azure Devops private network connectivity to Azure Resources. Runs the pipeline from the container.
 * Container Registry: Hosts images for container deployment. In this case the image for Self Hosted Devops Agent.
-
-## Resource Deployment
-
-```
-terraform init
-```
-
-```
-terraform plan
-```
-
-```
-terraform apply
-```
-
-#### Deployment Terms
-terraform init: Run terraform init to initialize the Terraform deployment. This command downloads the Azure modules required to manage your Azure resources.
-
-terraform plan: creates an execution plan, but doesn't execute it. Instead, it determines what actions are necessary to create the configuration specified in your configuration files.
-
-terraform apply: apply the execution plan to your cloud infrastructure.
-
