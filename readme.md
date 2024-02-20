@@ -1,5 +1,5 @@
 # Azure Wordpress Container Architecture and Deployment
-Hosts a highly available Wordpress website using Container instances and Azure MySQL Database. Reference instructions for deployment at https://www.zacaryfettig.com/portfolio/azure-wordpress/
+Hosts a highly available Wordpress website using Container instances and Azure MySQL Database. Reference instructions for deployment at https://www.zacaryfettig.com/portfolio/azure-wordpress
 
 ## Resources created in Template
 * Application Gateway: Layer 7 load balancer with Web Application Firewall. Requests come in through the gateway and privately connects to container instances.
